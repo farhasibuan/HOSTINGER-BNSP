@@ -37,7 +37,7 @@ const AddCourse = () => {
     }
 
     try {
-      await axios.post("http://127.0.0.1:3000/api/v1/pendaftaran/create", formData);
+      await axios.post("https://ahmad.rikpetik.site/api/v1/pendaftaran/create", formData);
       alert("Data pendaftar berhasil disimpan!");
       navigate("/dashboard/Courses");
     } catch (error) {
@@ -143,13 +143,12 @@ const AddCourse = () => {
           </Button>
           <Button
             variant="secondary"
-             className="w-100 mt-2"
-              onClick={() => navigate(-1)}
-            >
+            className="w-100 mt-2"
+            onClick={() => navigate(-1)}
+          >
             Kembali
           </Button>
         </Form>
-        
       </Container>
     </Layout>
   );

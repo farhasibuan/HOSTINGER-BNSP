@@ -12,7 +12,7 @@ const Courses = () => {
 
   const getPendaftars = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:3000/api/v1/pendaftaran");
+      const response = await axios.get("https://ahmad.rikpetik.site/api/v1/pendaftaran");
       setPendaftars(response.data.data);
     } catch (err) {
       console.log(err);
@@ -22,7 +22,7 @@ const Courses = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
       try {
-        await axios.delete(`http://127.0.0.1:3000/api/v1/pendaftaran/delete/${id}`);
+        await axios.delete(`https://ahmad.rikpetik.site/api/v1/pendaftaran/delete/${id}`);
         getPendaftars();
       } catch (err) {
         console.log(err);
@@ -34,7 +34,6 @@ const Courses = () => {
     getPendaftars();
   }, []);
 
-  // Filter berdasarkan nama
   const filteredPendaftars = pendaftars.filter((item) =>
     item.nm_pendaftar.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -42,7 +41,6 @@ const Courses = () => {
   return (
     <Layout>
       <Container className="mt-4">
-        {/* Judul dan tombol tambah */}
         <Row className="mb-3">
           <Col>
             <h3 className="fw-bold">Daftar Pendaftar</h3>
@@ -56,7 +54,6 @@ const Courses = () => {
           </Col>
         </Row>
 
-        {/* Kolom pencarian */}
         <Row className="mb-3">
           <Col md={4}>
             <input
@@ -69,7 +66,6 @@ const Courses = () => {
           </Col>
         </Row>
 
-        {/* Tabel atau pesan jika data kosong */}
         {filteredPendaftars.length === 0 ? (
           <Alert variant="warning">Data tidak ditemukan.</Alert>
         ) : (
@@ -125,7 +121,6 @@ const Courses = () => {
           </Table>
         )}
 
-        {/* Tombol kembali ke dashboard */}
         <Row className="mt-3">
           <Col>
             <Button variant="secondary" onClick={() => navigate("/dashboard")}>

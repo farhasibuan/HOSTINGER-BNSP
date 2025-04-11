@@ -13,24 +13,36 @@ import axios from "axios";
 
 const Dashboard = () => {
   const [totalPendaftar, setTotalPendaftar] = useState(0);
+  const [totalJurusan, setTotalJurusan] = useState(0);
+  const [totalGuru, setTotalGuru] = useState(0);
+  const [totalKelas, setTotalKelas] = useState(0);
 
   useEffect(() => {
-    const getTotalPendaftar = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/v1/pendaftaran");
-        setTotalPendaftar(response.data.data.length);
+        const [resPendaftar, resJurusan, resGuru, resKelas] = await Promise.all([
+          axios.get("http://127.0.0.1:3000/api/v1/pendaftaran"),
+          axios.get("http://127.0.0.1:3000/api/v1/jurusan"),
+          axios.get("http://127.0.0.1:3000/api/v1/guru"),
+          axios.get("http://127.0.0.1:3000/api/v1/kelas"),
+        ]);
+
+        setTotalPendaftar(resPendaftar.data.data.length);
+        setTotalJurusan(resJurusan.data.data.length);
+        setTotalGuru(resGuru.data.data.length);
+        setTotalKelas(resKelas.data.data.length);
       } catch (error) {
         console.error("Gagal mengambil data:", error);
       }
     };
 
-    getTotalPendaftar();
+    fetchData();
   }, []);
 
   return (
     <Layout>
       <Container className="mt-4">
-        <h3 className="text-center fw-bold">Dashboard PSB Onnline</h3>
+        <h3 className="text-center fw-bold">Dashboard PSB Online</h3>
 
         {/* Statistik PSB */}
         <Row className="mt-4">
@@ -46,7 +58,7 @@ const Dashboard = () => {
             <Card className="text-white bg-success shadow-lg">
               <Card.Body>
                 <h5><FaBookOpen /> Jurusan</h5>
-                <h2>5</h2>
+                <h2>{totalJurusan}</h2>
               </Card.Body>
             </Card>
           </Col>
@@ -54,7 +66,7 @@ const Dashboard = () => {
             <Card className="text-white bg-warning shadow-lg">
               <Card.Body>
                 <h5><FaChalkboardTeacher /> Guru</h5>
-                <h2>25</h2>
+                <h2>{totalGuru}</h2>
               </Card.Body>
             </Card>
           </Col>
@@ -62,7 +74,7 @@ const Dashboard = () => {
             <Card className="text-white bg-danger shadow-lg">
               <Card.Body>
                 <h5><FaSchool /> Ruang Kelas</h5>
-                <h2>20</h2>
+                <h2>{totalKelas}</h2>
               </Card.Body>
             </Card>
           </Col>
